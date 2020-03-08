@@ -1,0 +1,31 @@
+<p>Nous sommes le {{dateDuJour | date: 'dd/MM/yyyy'}}</p>
+<button class="btn btn-primary float-right mb-1"><a routerLink="/new-intervention" class="text-white"><i class="fas fa-plus-circle">Ajouter une intervention</i></a></button>
+<table class="table table-striped table-sm table-hover">
+  <thead>
+    <tr>
+      <th scope="col" class="align-middle">Id</th>
+      <th scope="col" class="align-middle">Libellé</th>
+      <th scope="col" class="align-middle">Lieu</th>
+      <th scope="col" class="align-middle">Nom de l'intervenant</th>
+      <th scope="col" class="align-middle">Date de l'intervention</th>
+      <th scope="col" class="align-middle"></th>
+      <th scope="col" class="align-middle"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let intervention of interventions; let i = index">
+      <th>{{intervention.id}}</th>
+      <th>{{intervention.libelle}}</th>
+      <td>{{intervention.lieu}}</td>
+      <td>{{intervention.nomIntervenant}}</td>
+      <td>{{intervention.dateIntervention}}</td>
+      <td><button class="btn-sm btn-outline-primary" (click)="onEditIntervention(i)">
+        <a><i class="far fa-edit ml-2"></i></a>
+      </button></td>
+      <td><button class="btn-sm btn-danger" (click)="deleteIntervention(intervention)"><span class="fas fa-trash-alt"></span></button></td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<button class="btn btn-primary mr-3" (click)="onFetch()">Charger les interventions</button>
+<button class="btn btn-success" (click)="onSave()">Sauvegarder les interventions</button>

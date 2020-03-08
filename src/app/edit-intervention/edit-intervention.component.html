@@ -1,0 +1,41 @@
+<form [formGroup]="interventionForm">
+  <div class="row">
+    <div class="col-8">
+      <button class="btn btn-primary float-right" (click)="onBack()"><i class="fas fa-arrow-circle-left"></i>Retour
+      </button>
+    </div>
+    <div class="col-8">
+      <h3>{{intervention.libelle}}</h3>
+    </div>
+    <div class="col-8">
+      <label for="description">Description</label>
+    </div>
+    <div class="col-8">
+      <input placeholder="{{intervention.description}}" id="description" class="mb-2 form-control">
+    </div>
+    <div class="col-8">
+      <label for="nomIntervenant">Nom de l'intervenant</label>
+    </div>
+    <div class="col-8">
+      <input placeholder="{{intervention.nomIntervenant}}" id="nomIntervenant" class="mb-2 form-control">
+    </div>
+    <div class="col-8">
+      <label for="lieu">Lieu</label>
+    </div>
+    <div class="col-8">
+      <input placeholder="{{intervention.lieu}}" id="lieu" class="mb-2 form-control">
+    </div>
+    <div class="col-8">
+      <label for="dateIntervention">Date de l'intervention</label>
+    </div>
+    <div class="col-8">
+      <input *ngIf="intervention.dateIntervention === ''" type="date" placeholder="{{intervention.dateIntervention}}" id="dateIntervention"
+             class="mb-2 form-control">
+      <p *ngIf="intervention.dateIntervention !== null">{{intervention.dateIntervention}}</p>
+    </div>
+    <div class="col-8">
+      <button type="submit" class="btn btn-primary mr-3">Enregistrer modifications</button>
+      <button type="reset" class="btn btn-danger">Annuler</button>
+    </div>
+  </div>
+</form>
