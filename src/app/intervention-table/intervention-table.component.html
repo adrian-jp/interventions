@@ -5,21 +5,23 @@
     <tr>
       <th scope="col" class="align-middle">Id</th>
       <th scope="col" class="align-middle">Libellé</th>
+      <th scope="col" class="align-middle">Description</th>
       <th scope="col" class="align-middle">Lieu</th>
       <th scope="col" class="align-middle">Nom de l'intervenant</th>
       <th scope="col" class="align-middle">Date de l'intervention</th>
-      <th scope="col" class="align-middle"></th>
-      <th scope="col" class="align-middle"></th>
+      <th scope="col" class="align-middle">Modifier</th>
+      <th scope="col" class="align-middle">Supprimer</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let intervention of interventions; let i = index">
+    <tr *ngFor="let intervention of interventions; let i = index" >
       <th>{{intervention.id}}</th>
-      <th>{{intervention.libelle}}</th>
+      <th [ngClass]="getColors(intervention)" class="text-white">{{intervention.libelle}}</th>
+      <td>{{intervention.description}}</td>
       <td>{{intervention.lieu}}</td>
       <td>{{intervention.nomIntervenant}}</td>
-      <td>{{intervention.dateIntervention}}</td>
-      <td><button class="btn-sm btn-outline-primary" (click)="onEditIntervention(i)">
+      <td>{{intervention.dateIntervention | date: 'dd/MM/yyyy'}}</td>
+      <td><button class="btn-sm btn-outline-primary" (click)="onEditIntervention(i)" [disabled]="getColors(intervention) === 'bg-danger'">
         <a><i class="far fa-edit ml-2"></i></a>
       </button></td>
       <td><button class="btn-sm btn-danger" (click)="deleteIntervention(intervention)"><span class="fas fa-trash-alt"></span></button></td>
@@ -27,5 +29,8 @@
   </tbody>
 </table>
 <br>
-<button class="btn btn-primary mr-3" (click)="onFetch()">Charger les interventions</button>
-<button class="btn btn-success" (click)="onSave()">Sauvegarder les interventions</button>
+<p class="bold">Légende des statuts</p>
+<p><i class="fas fa-stop text-danger"></i> : Terminé</p>
+<p><i class="fas fa-stop text-warning"></i> : Brouillon</p>
+<p><i class="fas fa-stop text-success"></i> : Validé</p>
+

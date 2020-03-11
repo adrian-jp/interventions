@@ -26,19 +26,25 @@ export class InterventionTableComponent implements OnInit, OnDestroy {
     );
     this.interventionService.getInterventions();
     this.interventionService.emitInterventions();
-
-
   }
 
-  onNewIntervention() {
-    this.router.navigate(['/new-intervention']);
-  }
-  onFetch() {
-    this.interventionService.getInterventions();
+  getColors(intervention: Intervention) {
+    const dateAComparer = new Date(intervention.dateIntervention);
+    if (this.dateDuJour > dateAComparer) {
+      return 'bg-danger';
+    } else if (!intervention.description || !intervention.nomIntervenant ||
+      !intervention.lieu || !intervention.dateIntervention) {
+      return 'bg-warning';
+    } else {
+      return 'bg-success';
+    }
   }
 
-  onSave() {
-    this.interventionService.saveIntervention();
+  onSortTable(param: any) {
+    // C'est dans cette partie que je comptes rendre le tableau triable par dates
+    this.interventions.sort((a: Intervention, b: Intervention) => {
+      return a[param] - b[param];
+    });
   }
 
   deleteIntervention(intervention: Intervention) {

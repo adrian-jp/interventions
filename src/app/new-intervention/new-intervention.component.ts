@@ -28,7 +28,7 @@ export class NewInterventionComponent implements OnInit {
       description: '',
       nomIntervenant: '',
       lieu: '',
-      dateIntervention: ''
+      dateIntervention: new Date()
     });
   }
 
@@ -56,11 +56,7 @@ export class NewInterventionComponent implements OnInit {
     const newIntervention = new Intervention(id, libelle, description, nomIntervenant, lieu, dateIntervention);
   }
 
-  saveIntervention() {
-    this.interventionService.saveIntervention();
-  }
-
-  onSave() {
-    this.interventionService.saveInterventionToServer();
+  onBack() {
+    this.router.navigate(['/interventions-list']);
   }
 }

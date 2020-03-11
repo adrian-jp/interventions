@@ -12,6 +12,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {InterventionService} from './services/intervention.service';
 import { HttpClientModule } from '@angular/common/http';
 
+
+
 const appRoutes: Routes = [
   { path: 'interventions-list', component: InterventionTableComponent },
   { path: 'new-intervention', component: NewInterventionComponent },

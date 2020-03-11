@@ -1,32 +1,18 @@
 import {Intervention} from '../models/intervention.model';
 import {Subject} from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/';
+import 'firebase/firestore';
+
+
 
 @Injectable()
 export class InterventionService {
-  private interventions: Intervention[] = [
-    {
-      id: 0,
-      libelle: 'Nid de poule',
-      description: 'Reboucher un nid de poule sur la chaussée',
-      nomIntervenant: 'Gérard Dupont',
-      lieu: 'Boulevard Dalby',
-      dateIntervention: '13/04/2020'
-    },
-    {
-      id: 1,
-      libelle: 'Lampadaire',
-      description: 'Changer ampoule de lampadaire',
-      nomIntervenant: 'Gérard Dupont',
-      lieu: 'rue Paul Bellamy',
-      dateIntervention: '13/03/2020'
-    },
-    ];
+
+  private interventions: Intervention[] = [];
   interventionSubject = new Subject<Intervention[]>();
 
-  constructor(private httpClient: HttpClient) {
+  constructor() {
   }
 
   emitInterventions() {
@@ -43,10 +29,23 @@ export class InterventionService {
   }
   addIntervention(intervention: Intervention) {
 
-    intervention.id = this.interventions.length + 1;
+    intervention.id = (this.interventions.length === 0) ? 0 : this.interventions[this.interventions.length - 1].id + 1;
     this.interventions.push(intervention);
     this.saveIntervention();
+    this.emitInterventions();
+  }
+
+  editIntervention(intervention: Intervention) {
+    const interventionIndexToRemove = this.interventions.findIndex(
+      (intervEl) => {
+        if (intervEl === intervention) {
+          return true;
+        }
+      }
+    );
+    this.interventions.splice(interventionIndexToRemove, 1);
     this.interventions.push(intervention);
+    this.saveIntervention();
     this.emitInterventions();
   }
 
@@ -87,32 +86,5 @@ export class InterventionService {
         );
       })
     );
-  }
-
-  saveInterventionToServer() {
-    this.httpClient
-      .put('https://interventions-35abb.firebaseio.com/interventions.json', this.interventions)
-      .subscribe(
-        () => {
-          alert('L\'intervention a été sauvegardée');
-        },
-        (error) => {
-          alert('Erreure lors de la sauvegarde' + error);
-        }
-      );
-  }
-
-  getInterventionsFromServer() {
-    this.httpClient
-      .get<any>('https://interventions-35abb.firebaseio.com/interventions.json')
-      .subscribe(
-        (response) => {
-          this.interventions = response;
-        },
-      (error) => {
-          alert('erreur de chargement' + error);
-      }
-      );
-    this.emitInterventions();
   }
 }

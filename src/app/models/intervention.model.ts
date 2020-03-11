@@ -4,6 +4,6 @@ export class Intervention {
               public description: string,
               public nomIntervenant: string,
               public lieu: string,
-              public dateIntervention: string) {
+              public dateIntervention: Date) {
   }
 }

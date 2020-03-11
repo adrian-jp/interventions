@@ -1,4 +1,4 @@
-<button class="btn btn-primary"><a routerLink="/interventions-list" class="text-white"><i class="fas fa-arrow-circle-left"></i>Retour à liste des interventions</a></button>
+<button class="btn btn-primary" (click)="onBack()"><i class="fas fa-arrow-circle-left"></i>Retour à liste des interventions</button>
 <div class="col">
   <form [formGroup]="interventionForm" (ngSubmit)="onSubmitForm()">
     <div class="form-group">
